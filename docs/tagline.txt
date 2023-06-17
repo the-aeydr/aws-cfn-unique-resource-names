@@ -1,0 +1,1 @@
+Built-in uniqueness within CloudFormation Stacks

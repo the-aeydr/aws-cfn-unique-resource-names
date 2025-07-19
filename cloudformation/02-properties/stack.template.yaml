@@ -1,0 +1,65 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+
+# The empty resource configuration that allows for testing against just mappings, parameters, and
+# outputs. To force a new update, the `LogicalID` of this must be re-generated as this resource
+# does not support updates.
+Resources:
+  WaitHandle:
+    Type: AWS::CloudFormation::WaitConditionHandle
+
+# -------------------------------------------------
+Description: A list of pseudo predefined parameters within a CloudFormation stack
+
+Outputs:
+  GeneratedName:
+    Description: A _unique_ resource name generated from the StackId's fourth partition
+    Value:
+      !Join [
+        "-",
+        [
+          "Example",
+          !Select [4, !Split ["-", !Select [2, !Split ["/", !Ref AWS::StackId]]]],
+        ],
+      ]
+  # -------------------------------------------------
+  AWSAccountID:
+    Description: Returns the AWS account ID of the account in which the stack is being created, such as 123456789012.
+    Value:
+      Ref: AWS::AccountId
+  AWSAccountRegion:
+    Description: Returns a string representing the Region in which the encompassing resource is being created, such as us-west-2.
+    Value:
+      Ref: AWS::Region
+  StackName:
+    Description: Returns the name of the stack as specified with the aws cloudformation create-stack command, such as teststack.
+    Value:
+      Ref: AWS::StackName
+  StackId:
+    Description: Returns the ID of the stack, such as arn:aws:cloudformation:ca-central-1:123456789012:stack/aws-cfn-unique-resource-name/f0228ab2-2ba7-47bd-9d19-65c12972248e.
+    Value:
+      Ref: AWS::StackId
+  Uuid:
+    Description: Returns the Uuid of the stack, such as f0228ab2-2ba7-47bd-9d19-65c12972248e.
+    Value: 
+      !Select [2, !Split ["/", !Ref AWS::StackId]]
+  UuidPartition1:
+    Description: Returns the first partition of the Uuid for the stack, such as f0228ab2.
+    Value:
+      !Select [0, !Split ["-", !Select [2, !Split ["/", !Ref AWS::StackId]]]]
+  UuidPartition2:
+    Description: Returns the second partition of the Uuid for the stack, such as 2ba7.
+    Value:
+      !Select [1, !Split ["-", !Select [2, !Split ["/", !Ref AWS::StackId]]]]
+  UuidPartition3:
+    Description: Returns the third partition of the Uuid for the stack, such as 47bd.
+    Value:
+      !Select [2, !Split ["-", !Select [2, !Split ["/", !Ref AWS::StackId]]]]
+  UuidPartition4:
+    Description: Returns the fourth partition of the Uuid for the stack, such as 9d19.
+    Value:
+      !Select [3, !Split ["-", !Select [2, !Split ["/", !Ref AWS::StackId]]]]
+  UuidPartition5:
+    Description: Returns the fifth partition of the Uuid for the stack, such as 65c12972248e.
+    Value:
+      !Select [4, !Split ["-", !Select [2, !Split ["/", !Ref AWS::StackId]]]]

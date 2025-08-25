@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you refer to this article, please cite it as below."
+
+version: 1.0.0
+date-released: 2023-06-17
+title: "Using built-in CloudFormation variables to generate unique resource names"
+url: "https://writing.aeydr.dev/notes/aws-cfn-unique-resource-names"
+authors:
+- given-names: "aeydr"
+
+preferred-citation:
+  type: article
+  journal: "The Architectural Decision Record"
+  authors:
+  - given-names: "aeydr"
+
+  title: "Using built-in CloudFormation variables to generate unique resource names"
+  month: 06
+  year: 2023

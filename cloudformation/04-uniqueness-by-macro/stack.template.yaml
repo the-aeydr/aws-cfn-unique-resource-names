@@ -1,0 +1,14 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      Tags:
+        - Key: RandomInt
+          Value:
+            'Fn::Transform':
+              - Name: RandomInt
+                Parameters:
+                  min: 100000000
+                  max: 200000000

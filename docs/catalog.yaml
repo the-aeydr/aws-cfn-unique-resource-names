@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: aws-cfn-unique-resource-names
+  description: Using AWS::StackId & other pseudo predefined cloudformation variables to generate unique resource names within a CloudFormation Template
+  tags:
+    - aws
+    - aws
+  annotations:
+    displayName: Using built-in CloudFormation variables to generate unique resource names
+    github.com/project-slug: the-aeydr/aws-cfn-unique-resource-names
+spec:
+  type: documentation
+  lifecycle: experimental

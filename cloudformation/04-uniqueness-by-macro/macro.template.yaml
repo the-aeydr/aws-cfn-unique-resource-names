@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  TransformFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.9
+      Handler: index.handler
+      MemorySize: 128
+      Timeout: 3
+      InlineCode: |
+        import random
+        def handler(event, context):
+            response = {
+                'requestId': event['requestId'],
+                'status': 'success'
+            }
+            try:
+                param_min = int(event['params']['min'])
+                param_max = int(event['params']['max'])
+                response['fragment'] = random.randint(param_min, param_max - 1)
+            except Exception as e:
+                response['status'] = 'failure'
+                response['errorMessage'] = str(e)
+            return response
+
+  Transform:
+    Type: AWS::CloudFormation::Macro
+    Properties:
+      Name: RandomInt
+      Description: Provides a random integer within the range requested.
+      FunctionName: !GetAtt TransformFunction.Arn

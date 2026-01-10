@@ -1,0 +1,61 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+
+# The empty resource configuration that allows for testing against just mappings, parameters, and
+# outputs. To force a new update, the `LogicalID` of this must be re-generated as this resource
+# does not support updates.
+Resources:
+  WaitHandle:
+    Type: AWS::CloudFormation::WaitConditionHandle
+
+# -------------------------------------------------
+Description: Preset resource reservations controlled by a parameter
+
+Parameters:
+  Name:
+    Description: |
+      A fixed name for a resource that exists in the CloudFormation stack. If unset, will
+      generate a unique name instead.
+    Type: String
+    Default: ''
+
+Conditions:
+  IsNameNotProvided:
+    Fn::Equals:
+      - Ref: Name
+      - ""
+
+Outputs:
+  StackId:
+    Description: StackId of this AWS CloudFormation Stack
+    Value:
+      !Ref AWS::StackId
+  GeneratedName:
+    Description: Generated name for the resource from the AWS::StackId, using the UUID Node as a suffix 
+    Value:
+      !Join [
+        "-",
+        [
+          "Sample",
+          !Select [
+            4,
+            !Split ["-", !Select [2, !Split ["/", !Ref AWS::StackId]]],
+          ],
+        ],
+      ]
+  Name:
+    Description: Name of the resource defined within the CloudFormation Stack
+    Value:
+      Fn::If:
+        - IsNameNotProvided
+        - !Join [
+            "-",
+            [
+              "Sample",
+              !Select [
+                4,
+                !Split ["-", !Select [2, !Split ["/", !Ref AWS::StackId]]],
+              ],
+            ],
+          ]
+        - !Ref Name
